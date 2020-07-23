@@ -1,28 +1,19 @@
 #include "binary_trees.h"
-/**
- * binary_tree_is_full - function to check if binary tree is full
- * @tree: tree
- * Return: return value
- */
-int binary_tree_is_full(const binary_tree_t *tree)
-{
-	int counter = 0;
 
-	if (!tree)
+/**
+ * binary_tree_is_leaf - checks if node is leaf
+ * @node: input node
+ * Return: 1 for leaf or 0
+ *
+ */
+int binary_tree_is_leaf(const binary_tree_t *node)
+{
+	if (!node || node->right || node->left)
 		return (0);
 
-	if (tree->right && tree->left)
-	{
-		counter = 1;
-		counter = counter * binary_tree_is_full(tree->left)
-			* binary_tree_is_full(tree->right);
-	}
-	else if (!(tree->right) && !(tree->left))
-		counter = 1;
-	else
-		counter = 0;
-	return (counter);
+	return (1);
 }
+
 /**
  * binary_tree_height - checks for the height of a node
  * @tree: input tree
@@ -56,20 +47,19 @@ size_t binary_tree_height(const binary_tree_t *tree)
  */
 int binary_tree_is_perfect(const binary_tree_t *tree)
 {
-	int len_left = 0;
-	int len_right = 0;
+	binary_tree_t *l, *r;
 
-	if (!tree)
+	if (tree == NULL)
 		return (0);
-
-	if (tree->left == NULL || tree->right == NULL)
+	l = tree->left;
+	r = tree->right;
+	if (binary_tree_is_leaf(tree))
+		return (1);
+	if (l == NULL || r == NULL)
 		return (0);
-
-	len_left = (int) binary_tree_height(tree->left);
-	len_right = (int) binary_tree_height(tree->right);
-	if (len_right == len_left)
+	if (binary_tree_height(l) == binary_tree_height(r))
 	{
-		if (binary_tree_is_full(tree->left) * binary_tree_is_full(tree->right) == 1)
+		if (binary_tree_is_perfect(l) && binary_tree_is_perfect(r))
 			return (1);
 	}
 	return (0);
