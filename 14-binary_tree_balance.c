@@ -42,18 +42,12 @@ int binary_tree_balance(const binary_tree_t *tree)
 	if (!tree)
 		return (0);
 
-	counterLeft = binary_tree_height(tree->left);
-	counterRight = binary_tree_height(tree->right);
 
 	if (tree->right)
-	{
-		if (tree->right->left == NULL && tree->right->right == NULL)
-		counterRight = 1;
-	}
+		counterRight = binary_tree_height(tree->right) + 1;
+
 	if (tree->left)
-	{
-		if (tree->left->left == NULL && tree->left->right == NULL)
-		counterLeft = 1;
-	}
+		counterLeft = binary_tree_height(tree->left) + 1;
+
 	return (counterLeft - counterRight);
 }
